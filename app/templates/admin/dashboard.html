@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Teacher' if current_user.role == 'teacher' else 'Super Admin' }} Dashboard</h1>
+<div class="row g-3">{% for label, value in stats.items() %}<div class="col-6 col-md-4"><div class="metric"><span>{{ label|title }}</span><strong>{{ value }}</strong></div></div>{% endfor %}</div>
+<div class="mt-4 d-flex gap-2 flex-wrap"><a class="btn btn-primary" href="{{ url_for('admin.quizzes') }}">+ Create Quiz</a><a class="btn btn-outline-primary" href="{{ url_for('admin.question_bank') }}">+ Add Question</a><a class="btn btn-outline-primary" href="{{ url_for('admin.question_bank') }}">+ Upload Excel</a><a class="btn btn-outline-primary" href="{{ url_for('admin.reports') }}">View Reports</a>{% if current_user.role in ['super_admin','admin'] %}<a class="btn btn-outline-primary" href="{{ url_for('admin.users') }}">Manage Users</a><a class="btn btn-outline-primary" href="{{ url_for('admin.schools') }}">Schools</a>{% endif %}</div>
+{% endblock %}

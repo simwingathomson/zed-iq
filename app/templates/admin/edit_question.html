@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit Question</h1>
+<form method="post" class="vstack gap-2 col-lg-8">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <textarea class="form-control" name="question" required>{{ question.question }}</textarea>
+  {% for field,label,value in [("option_a","Option A",question.option_a),("option_b","Option B",question.option_b),("option_c","Option C",question.option_c),("option_d","Option D",question.option_d)] %}<input class="form-control" name="{{ field }}" placeholder="{{ label }}" value="{{ value }}" required>{% endfor %}
+  <select class="form-select" name="correct_answer">{% for l in ["A","B","C","D"] %}<option {% if question.correct_answer == l %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+  <textarea class="form-control" name="explanation">{{ question.explanation }}</textarea>
+  <select class="form-select" name="subject">{% for s in subjects %}<option value="{{ s.id }}" {% if question.subject_id == s.id %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select>
+  <select class="form-select" name="topic_id"><option value="">Topic</option>{% for t in topics %}<option value="{{ t.id }}" {% if question.topic_id == t.id %}selected{% endif %}>{{ t.subject.name }} - {{ t.name }}</option>{% endfor %}</select>
+  <select class="form-select" name="grade_id">{% for g in grades %}<option value="{{ g.id }}" {% if question.grade_id == g.id %}selected{% endif %}>{{ g.name }}</option>{% endfor %}</select>
+  <input type="hidden" name="grade" value="{{ question.grade }}">
+  <select class="form-select" name="difficulty">{% for d in ["Easy","Medium","Hard"] %}<option {% if question.difficulty == d %}selected{% endif %}>{{ d }}</option>{% endfor %}</select>
+  <input type="hidden" name="question_type" value="Multiple Choice">
+  <select class="form-select" name="category_id"><option value="">Category</option>{% for c in categories %}<option value="{{ c.id }}" {% if question.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
+  <input class="form-control" type="number" name="marks" value="{{ question.marks }}" min="1">
+  <input class="form-control" type="number" name="timer_seconds" value="{{ question.timer_seconds }}" min="2">
+  <select class="form-select" name="status"><option value="active" {% if question.status == 'active' %}selected{% endif %}>Active</option><option value="draft" {% if question.status == 'draft' %}selected{% endif %}>Draft</option></select>
+  <button class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

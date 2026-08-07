@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Quizzes</h1>
+<form method="post" class="vstack gap-3 mb-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row g-2"><div class="col-md"><input class="form-control" name="title" placeholder="Quiz Name" required></div><div class="col-md"><select class="form-select" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}</select></div><div class="col-md"><select class="form-select" name="topic_id"><option value="">Any Topic</option>{% for t in topics %}<option value="{{ t.id }}">{{ t.subject.name }} - {{ t.name }}</option>{% endfor %}</select></div></div>
+  <div class="row g-2"><div class="col"><select class="form-select" name="grade_scope" multiple>{% for g in grades %}<option value="{{ g.name }}">{{ g.name }}</option>{% endfor %}<option value="All Secondary">All Secondary</option></select></div><div class="col"><input class="form-control" type="number" name="number_of_questions" value="10" min="1" placeholder="Number of Questions"></div><div class="col"><select class="form-select" name="difficulty"><option value="">Any Difficulty</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div></div>
+  <div class="row g-2"><div class="col"><input class="form-control" type="number" name="timer_seconds" value="5" min="2" placeholder="Timer Per Question"></div><div class="col"><input class="form-control" type="number" name="pass_mark" value="50" min="1" max="100" placeholder="Pass Mark"></div><div class="col"><input class="form-control" type="number" name="max_attempts" value="1" min="1" placeholder="Maximum Attempts"></div></div>
+  <div class="row g-2"><div class="col"><input class="form-control" type="datetime-local" name="start_date"></div><div class="col"><input class="form-control" type="datetime-local" name="end_date"></div><div class="col"><select class="form-select" name="selection_mode"><option value="manual">Manual Selection</option><option value="auto">Automatic Selection</option></select></div></div>
+  <input type="hidden" name="grade" value="">
+  <label class="form-check"><input class="form-check-input" type="checkbox" name="randomize" value="1"> <span class="form-check-label">Random Questions</span></label>
+  <div class="question-select"><p class="fw-semibold">Manual Selection</p>{% for q in bank_questions %}<label class="form-check"><input class="form-check-input" type="checkbox" name="question_ids" value="{{ q.id }}"> <span class="form-check-label">{{ q.question }} <small class="text-muted">({{ q.subject.name }} / {{ q.difficulty }})</small></span></label>{% endfor %}</div>
+  <button class="btn btn-primary">Create Quiz</button>
+</form>
+<div class="table-responsive"><table class="table"><tr><th>Title</th><th>Subject</th><th>Questions</th><th>Status</th></tr>{% for quiz in quizzes %}<tr><td>{{ quiz.title }}</td><td>{{ quiz.subject.name }}</td><td>{{ quiz.questions|length }}</td><td>{{ 'Active' if quiz.active else 'Inactive' }}</td></tr>{% endfor %}</table></div>
+{% endblock %}

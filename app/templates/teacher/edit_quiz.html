@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ quiz.title }}</h1>
+<p>{{ quiz.subject.name }} · {{ quiz.timer_seconds }} seconds · pass mark {{ quiz.pass_mark }}%</p>
+<div class="row g-4">
+<div class="col-lg-6">
+<h2 class="h4">Add Question</h2>
+<form method="post" class="vstack gap-2">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <textarea class="form-control" name="text" placeholder="Question text" required></textarea>
+  {% for label in ["A","B","C","D"] %}<input class="form-control" name="choice_{{ label }}" placeholder="Choice {{ label }}" required>{% endfor %}
+  <select class="form-select" name="correct">{% for label in ["A","B","C","D"] %}<option>{{ label }}</option>{% endfor %}</select>
+  <button class="btn btn-primary">Add Question</button>
+</form>
+<h2 class="h4 mt-4">Import CSV/XLSX</h2>
+<p class="text-muted">Columns: text, A, B, C, D, correct</p>
+<form method="post" action="{{ url_for('teacher.import_questions', quiz_id=quiz.id) }}" enctype="multipart/form-data" class="d-flex gap-2">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input class="form-control" type="file" name="file" accept=".csv,.xlsx" required><button class="btn btn-outline-primary">Upload</button>
+</form>
+</div>
+<div class="col-lg-6">
+<h2 class="h4">Questions</h2>
+<ol class="list-group list-group-numbered">{% for q in quiz.questions|sort(attribute='order') %}<li class="list-group-item"><strong>{{ q.text }}</strong><div class="small text-muted">{% for c in q.choices|sort(attribute='label') %}{{ c.label }}. {{ c.text }}{% if c.correct %} ✓{% endif %}<br>{% endfor %}</div></li>{% endfor %}</ol>
+</div>
+</div>
+{% endblock %}
+
