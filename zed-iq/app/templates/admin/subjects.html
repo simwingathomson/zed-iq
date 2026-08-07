@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Subjects</h1>
+<form method="post" class="row g-2 mb-4">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="col-md"><input class="form-control" name="name" placeholder="Subject name" required></div>
+  <div class="col-md"><input class="form-control" name="code" placeholder="Code"></div>
+  <div class="col-md"><input class="form-control" name="description" placeholder="Description"></div>
+  <div class="col-md"><input class="form-control" name="icon" value="book" placeholder="Icon"></div>
+  <div class="col-md"><input class="form-control form-control-color" type="color" name="color" value="#078052"></div>
+  <div class="col-md d-flex align-items-center"><label class="form-check"><input class="form-check-input" type="checkbox" name="active" checked> <span class="form-check-label">Active</span></label></div>
+  <div class="col-auto"><button class="btn btn-primary">Add</button></div>
+</form>
+<div class="table-responsive"><table class="table align-middle"><tr><th>Name</th><th>Code</th><th>Description</th><th>Colour</th><th>Status</th><th>Built-in</th><th>Actions</th></tr>{% for s in subjects %}<tr><form method="post" action="{{ url_for('admin.edit_subject', subject_id=s.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><td><input class="form-control" name="name" value="{{ s.name }}"></td><td><input class="form-control" name="code" value="{{ s.code }}"></td><td><input class="form-control" name="description" value="{{ s.description }}"></td><td><input class="form-control form-control-color" type="color" name="color" value="{{ s.color or '#078052' }}"><input type="hidden" name="icon" value="{{ s.icon or 'book' }}"></td><td><input type="checkbox" name="active" {% if s.active %}checked{% endif %}></td><td>{{ 'Yes' if s.built_in else 'No' }}</td><td><button class="btn btn-sm btn-outline-primary">Save</button></form><form method="post" action="{{ url_for('admin.delete_subject', subject_id=s.id) }}" class="d-inline" onsubmit="return confirm('Delete this subject?')"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-sm btn-outline-danger" {% if s.built_in %}disabled{% endif %}>Delete</button></form></td></tr>{% endfor %}</table></div>
+{% endblock %}
+
