@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-panel mx-auto">
+<h1 class="h3">Student Registration</h1>
+<form method="post" class="vstack gap-3">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Name<input class="form-control" name="name" required></label>
+  <label>Email<input class="form-control" type="email" name="email" required></label>
+  <label>School<select class="form-select" name="school_id"><option value="">None</option>{% for s in schools %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}</select></label>
+  <label>Password<input class="form-control" type="password" name="password" minlength="8" required></label>
+  <button class="btn btn-primary">Create Account</button>
+</form>
+</div>
+{% endblock %}
+

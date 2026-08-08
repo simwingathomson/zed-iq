@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-panel mx-auto">
+  <h1 class="h3">Administrator Portal</h1>
+  <form method="post" class="vstack gap-3">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username<input class="form-control" name="username" required></label>
+    <label>Password<input class="form-control" type="password" name="password" required></label>
+    <label class="form-check"><input class="form-check-input" type="checkbox" name="remember"> <span class="form-check-label">Remember Me</span></label>
+    <button class="btn btn-primary">Login</button>
+  </form>
+</div>
+{% endblock %}
