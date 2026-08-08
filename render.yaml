@@ -1,9 +1,8 @@
 services:
   - type: web
     name: zed-iq
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app
+    env: docker
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: SECRET_KEY
         generateValue: true
