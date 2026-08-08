@@ -1,6 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>Schools</h1><form method="post" class="row g-2 mb-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><div class="col"><input class="form-control" name="name" placeholder="School name" required></div><div class="col"><input class="form-control" name="district" placeholder="District"></div><div class="col-auto"><button class="btn btn-primary">Add</button></div></form>
-<ul class="list-group">{% for s in schools %}<li class="list-group-item d-flex justify-content-between"><span>{{ s.name }}</span><span class="text-muted">{{ s.district }}</span></li>{% endfor %}</ul>
-{% endblock %}
-

@@ -1,3 +1,0 @@
-{% extends "base.html" %}
-{% block content %}<h1>{{ title }}</h1><div class="table-responsive"><table class="table"><tr><th>Name</th><th>Email</th><th>School</th><th>Status</th></tr>{% for u in users %}<tr><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.school.name if u.school else '' }}</td><td>{{ 'Active' if u.active else 'Inactive' }}</td></tr>{% endfor %}</table></div>{% endblock %}
-

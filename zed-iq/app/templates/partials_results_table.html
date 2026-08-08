@@ -1,2 +1,0 @@
-<div class="table-responsive"><table class="table"><tr><th>Student</th><th>Quiz</th><th>Score</th><th>%</th><th>Status</th><th>Time</th></tr>{% for r in results %}<tr><td>{{ r.student.name }}</td><td>{{ r.quiz.title }}</td><td>{{ r.score }}/{{ r.total }}</td><td>{{ r.percentage }}</td><td>{{ 'Pass' if r.passed else 'Fail' }}</td><td>{{ r.time_taken }}s</td></tr>{% endfor %}</table></div>
-
