@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 10000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "wsgi:app"]
+CMD ["sh", "-c", "python -c \"from wsgi import app; from app import db; from app.models import seed_defaults; app.app_context().push(); db.create_all(); seed_defaults()\" && gunicorn --bind 0.0.0.0:10000 wsgi:app"]
