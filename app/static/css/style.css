@@ -5,6 +5,7 @@ body{background:#f7faf9}.text-emerald{color:var(--emerald)!important}.text-gold{
 .sponsor-banner strong{color:var(--blue)}
 .sponsor-banner span:last-child{color:#6c757d}
 .sponsor-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--emerald)}
+.quiz-state{display:grid;min-height:220px;place-content:center}
 @media (max-width:576px){.sponsor-banner{align-items:flex-start;flex-direction:column}.sponsor-banner .btn{width:100%}}
 [data-bs-theme=dark] .sponsor-banner{border-color:rgba(255,255,255,.22);background:rgba(214,162,31,.13)}
 [data-bs-theme=dark] .sponsor-banner strong{color:#fff}

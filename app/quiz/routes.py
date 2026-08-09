@@ -62,10 +62,17 @@ def answer(quiz_id):
     if Answer.query.filter_by(result_id=result.id, question_id=question.id).first():
         return jsonify({"ok": True})
     selected = data.get("selected") or "No Answer"
-    correct = Choice.query.filter_by(question_id=question.id, label=selected, correct=True).first() is not None
+    correct_choice = Choice.query.filter_by(question_id=question.id, correct=True).first()
+    correct = correct_choice is not None and selected == correct_choice.label
     db.session.add(Answer(result_id=result.id, question_id=question.id, selected_label=selected, correct=correct))
     db.session.commit()
-    return jsonify({"ok": True})
+    return jsonify({
+        "ok": True,
+        "correct": correct,
+        "selected": selected,
+        "correct_label": correct_choice.label if correct_choice else "",
+        "correct_text": correct_choice.text if correct_choice else "",
+    })
 
 
 def finish_result(result):
